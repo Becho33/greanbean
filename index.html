@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Green Bean — Cannabis Café • Chiang Mai</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome (icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Preload logo to ensure splash shows quickly -->
+    <link rel="preload" href="1234.png" as="image">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Green Bean — cozy cannabis café in Chiang Mai. Visit us, order online, or book a chill session. Flowers, edibles, drinks, and friendly vibes.">
+</head>
+<!-- Splash screen: shows logo with double flash on load -->
+<body>
+
+<!-- Immediately set dark mode by default (unless user explicitly disabled it) to avoid flash -->
+<script>
+    (function(){
+        try{
+            var key = 'darkMode';
+            var saved = localStorage.getItem(key);
+            // If user explicitly disabled dark mode, respect that. Otherwise enable dark by default.
+            if (saved === 'disabled') {
+                // do nothing, user prefers light
+            } else {
+                // enable dark and persist choice so subsequent visits start dark
+                try { localStorage.setItem(key,'enabled'); } catch(e){}
+                // body may already exist since this script runs just after <body>
+                if (document.body) document.body.classList.add('dark');
+            }
+        }catch(e){}
+    })();
+</script>
+
+<!-- Splash screen: shows logo with double flash on load -->
+<div id="splash" class="splash" aria-hidden="false" role="presentation">
+    <img src="1234.png" alt="Green Bean" class="splash-logo">
+</div>
+
+<!-- Sticky Header / Navigation -->
+<header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+        <!-- Replace the emoji with your uploaded logo image at 1234.png (in the same folder) -->
+        <a class="brand" href="#">
+            <img src="1234.png" alt="Green Bean logo" class="brand-logo">
+            <span class="brand-text"><strong>Green</strong> Bean</span>
+        </a>
+
+        <nav class="nav" id="mainNav" aria-label="Primary">
+            <a href="#hero" class="nav-link">Home</a>
+            <a href="#menu" class="nav-link">Menu</a>
+            <a href="#reviews" class="nav-link">Reviews</a>
+            <a href="#location" class="nav-link">Location</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="tel:+66629423598" class="pill btn-light" aria-label="Call Green Bean"><i class="fas fa-phone"></i></a>
+            <a href="https://wa.me/66629423598" class="pill btn-accent" target="_blank" rel="noopener" aria-label="WhatsApp Green Bean"><i class="fab fa-whatsapp"></i></a>
+            <button id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
+            <button id="mobileMenuToggle" class="mobile-menu-btn" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        </div>
+        <!-- Live ticker (BTC & THB→USD) -->
+        <div id="liveTicker" class="live-ticker" aria-live="polite" aria-atomic="true">
+            <div class="ticker-item" id="btcTicker" title="Bitcoin price">
+                <i class="fab fa-bitcoin"></i>
+                <span class="label">BTC</span>
+                <span class="value" id="btcPriceUsd">—</span>
+                <span class="value small" id="btcPriceThb" style="margin-left:6px;font-weight:600;opacity:0.9">—</span>
+                <small class="delta" id="btcDelta"></small>
+            </div>
+            <div class="ticker-item" id="thbTicker" title="Thai Baht to US Dollar">
+                <i class="fas fa-coins"></i>
+                <span class="label">THB→USD</span>
+                <span class="value" id="thbRate">—</span>
+                <small class="delta" id="thbDelta"></small>
+            </div>
+            <button id="tickerRefresh" class="btn btn-sm" aria-label="Refresh rates"><i class="fas fa-sync"></i></button>
+        </div>
+
+        <!-- Mobile compact ticker: visible on phones -->
+        <div id="mobileTicker" class="mobile-ticker" aria-hidden="true">
+            <div class="mobile-item">
+                <i class="fab fa-bitcoin"></i>
+                <span id="mBtcUsd">—</span>
+                <span id="mBtcThb" style="opacity:0.85;margin-left:6px">—</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Floating order button for conversion (mobile/desktop) -->
+<a id="floatingOrder" class="floating-order" href="#orderModal" aria-label="Order now">Order <i class="fas fa-shopping-bag"></i></a>
+
+<main>
+    <!-- Hero -->
+    <section id="hero" class="hero">
+        <div class="container hero-inner">
+            <div class="hero-content">
+                <h1 class="hero-title">Cozy vibes, curated cannabis.</h1>
+                <p class="lead">Green Bean is Chiang Mai's premium cannabis café — fresh flowers, delightful edibles, and handcrafted drinks in a relaxing, aesthetic space.</p>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" id="orderNowBtn">Order Now</button>
+                    <a class="btn btn-outline" href="#location">Visit Us</a>
+                    <a class="btn btn-ghost" href="#menu">View Menu</a>
+                </div>
+                <ul class="quick-features">
+                    <li><i class="fas fa-mug-hot"></i> Drinks</li>
+                    <li><i class="fas fa-leaf"></i> Fresh Flowers</li>
+                    <li><i class="fas fa-cookie-bite"></i> Edibles</li>
+                    <li><strong>24/7</strong> open</li>
+                </ul>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <!-- Decorative logo/art (use same uploaded logo for a cozy hero) -->
+                <div class="art-card"><img src="1234.png" alt="Green Bean art" class="art-logo"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section">
+        <div class="container">
+            <div class="section-head">
+                <h2>Our Menu</h2>
+                <p class="muted">Curated selection — flowers, edibles, and cozy drinks. Order online or book a tasting.</p>
+            </div>
+
+            <div class="menu-filters">
+                <button class="chip active" data-filter="all">All</button>
+                <button class="chip" data-filter="flower">Flowers</button>
+                <button class="chip" data-filter="edible">Edibles</button>
+                <button class="chip" data-filter="drink">Drinks</button>
+            </div>
+
+            <div class="cards" id="menuCards">
+                <!-- Sample product card -->
+                <article class="card" data-type="flower">
+                    <div class="card-top">
+                        <span class="tag">Sativa</span>
+                        <h3>Golden Sunrise</h3>
+                    </div>
+                    <p class="card-desc">Citrus-forward sativa with uplifting effects — perfect for daytime creative flow.</p>
+                    <div class="card-meta">
+                        <div class="price">฿350 / g</div>
+                        <button class="btn btn-sm btn-primary" data-action="order" data-name="Golden Sunrise" data-price="350">Order</button>
+                    </div>
+                </article>
+
+                <article class="card" data-type="flower">
+                    <div class="card-top">
+                        <span class="tag">Indica</span>
+                        <h3>Velvet Night</h3>
+                    </div>
+                    <p class="card-desc">Smooth and relaxing — a cozy evening companion to mellow out and unwind.</p>
+                    <div class="card-meta">
+                        <div class="price">฿320 / g</div>
+                        <button class="btn btn-sm btn-primary" data-action="order" data-name="Velvet Night" data-price="320">Order</button>
+                    </div>
+                </article>
+
+                <article class="card" data-type="edible">
+                    <div class="card-top">
+                        <span class="tag">Edible</span>
+                        <h3>Choco Bliss Brownie</h3>
+                    </div>
+                    <p class="card-desc">Decadent 10mg THC per slice. Sweet, tested, and responsibly dosed.</p>
+                    <div class="card-meta">
+                        <div class="price">฿120</div>
+                        <button class="btn btn-sm btn-primary" data-action="order" data-name="Choco Bliss Brownie" data-price="120">Order</button>
+                    </div>
+                </article>
+
+                <article class="card" data-type="drink">
+                    <div class="card-top">
+                        <span class="tag">Drink</span>
+                        <h3>Hemp Latte</h3>
+                    </div>
+                    <p class="card-desc">House-blend latte with hemp milk and a gentle terpene twist.</p>
+                    <div class="card-meta">
+                        <div class="price">฿90</div>
+                        <button class="btn btn-sm btn-primary" data-action="order" data-name="Hemp Latte" data-price="90">Order</button>
+                    </div>
+                </article>
+
+                <!-- Add more cards as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="section alt">
+        <div class="container">
+            <div class="section-head">
+                <h2>What people say</h2>
+                <p class="muted">Real reviews from happy customers.</p>
+            </div>
+
+            <div class="reviews-grid">
+                <blockquote class="review card">
+                    <p>Absolutely the coziest spot — great coffee and the staff helped me pick the perfect strain. 5/5</p>
+                    <footer>— Anna, Chiang Mai</footer>
+                </blockquote>
+
+                <blockquote class="review card">
+                    <p>Premium vibes, tasteful menu, and a chill atmosphere. Perfect for catching up with friends.</p>
+                    <footer>— Mark, Traveler</footer>
+                </blockquote>
+
+                <blockquote class="review card">
+                    <p>Fast service, clean space, and the hemp latte is a must-try.</p>
+                    <footer>— Suri, Local</footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location -->
+    <section id="location" class="section">
+        <div class="container">
+            <div class="section-head">
+                <h2>Find us</h2>
+                <p class="muted">20/2 Huay Kaew Rd, Chang Phueak, Mueang Chiang Mai District, Chiang Mai 50300</p>
+            </div>
+
+            <div class="location-grid">
+                <div class="map card">
+                    <!-- Google Maps embed -->
+                    <iframe title="Green Bean location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.1234567890123!2d98.9687113152607!3d18.8037109876543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da29b123456789%3A0xabcdef1234567890!2sGreen%20Bean%20Cannabis%20Cafe!5e0!3m2!1sen!2sth!4v0000000000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <aside class="contact card">
+                    <h3>Contact & Visit</h3>
+                    <p><strong>Phone:</strong> <a href="tel:+66629423598">+66 62 942 3598</a></p>
+                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/66629423598" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
+
+                    <h4>Opening Hours</h4>
+                    <ul class="hours">
+                        <li><span>Mon — Sun</span><strong>24/7</strong></li>
+                    </ul>
+
+                    <div class="contact-actions">
+                        <a href="tel:+66629423598" class="btn btn-outline"><i class="fas fa-phone"></i> Call</a>
+                        <a href="https://wa.me/66629423598" target="_blank" rel="noopener" class="btn btn-accent"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <button class="btn btn-primary" id="bookBtn">Book / Order</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / footer CTA -->
+    <section id="contact" class="section alt">
+        <div class="container small">
+            <div class="section-head">
+                <h2>Ready to visit?</h2>
+                <p class="muted">Drop by, order ahead, or book a cozy spot. We’ll have everything ready.</p>
+            </div>
+            <div class="contact-cta">
+                <button class="btn btn-primary" id="orderNowBtn2">Order Now</button>
+                <a class="btn btn-outline" href="#location">Get Directions</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Order / Book Modal (front-end only) -->
+<div id="orderModal" class="modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="orderModalLabel">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <h3 id="orderModalLabel">Order / Book</h3>
+        <p class="muted">Select items and provide contact details. This is a front-end demo UI.</p>
+
+        <form id="orderForm">
+            <div class="form-row">
+                <label for="name">Name</label>
+                <input id="name" name="name" required placeholder="Your name">
+            </div>
+            <div class="form-row">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" required placeholder="+66 62 942 3598">
+            </div>
+            <div class="form-row">
+                <label for="items">Items</label>
+                <textarea id="items" name="items" placeholder="E.g. 1x Golden Sunrise (g), 2x Hemp Latte" rows="3"></textarea>
+            </div>
+            <p class="muted">When you submit, your order will open in WhatsApp so you can confirm it to the café.</p>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Send via WhatsApp</button>
+                <button class="btn btn-outline modal-close" type="button">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <div class="brand-block">
+            <img src="1234.png" alt="Green Bean logo" class="brand-logo footer-logo">
+            <div>
+                <strong>Green Bean</strong>
+                <div class="muted">Cannabis Café • Chiang Mai</div>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="#menu">Menu</a>
+            <a href="#location">Location</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="legal muted">© 2026 Green Bean — All rights reserved</div>
+    </div>
+</footer>
+
+<!-- Toast / fallback UI shown after attempting to open WhatsApp -->
+<div id="toast" class="toast" aria-hidden="true" role="status">
+    <div class="toast-inner">
+        <div id="toastMsg" class="toast-msg">Opening WhatsApp...</div>
+        <div class="toast-actions">
+            <button id="toastOpen" class="btn btn-sm btn-primary">Open WhatsApp</button>
+            <button id="toastCopy" class="btn btn-sm btn-outline">Copy message</button>
+            <button id="toastClose" class="toast-close" aria-label="Close">✕</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
